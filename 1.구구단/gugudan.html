@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>구구단</title>
+</head>
+<body>
+	<div id="root"></div>
+	
+	<!-- React를 실행. -->
+	<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+	<!-- JSX -->
+	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+	
+	<script type="text/babel">
+		class GuGuDan extends React.Component {
+			//constructor(props)와 그 안의 super(props), this는 없어도 된다
+			state = {
+				first: Math.ceil(Math.random() * 9), //1~9까지 랜덤값	
+				second: Math.ceil(Math.random() * 9),
+				value: '',
+				result: '',
+			};
+			
+			//함수로 따로 뺀 경우에는 function을 붙이지 않고 무조건 화살표 함수로 사용
+			//render 내에서는 상관없이 function을 붙여도 된다.
+			onSubmit = (e) => {
+				e.preventDefault(); //이벤트 발생 시 기본적으로 브라우저가 실행하는 동작을 취소 
+				if(parseInt(this.state.value) === this.state.first * this.state.second){
+					this.setState((prevState) => { //이전 상태 값을 구분하기 위해 함수 추가여 그 안에서 값을 리턴
+						return {
+							result: '정답 : ' + prevState.value,
+							first: Math.ceil(Math.random() * 9),
+							second: Math.ceil(Math.random() * 9),
+							value: '',
+						};
+					});
+				} else {
+					this.setState({
+						result: '땡!',
+						value: '',
+					});
+				}
+				
+				this.hello.focus();
+				
+				//setState는 비동기로 동작하기 때문에
+				//반복해서 같은 로직의 setState를 작성하면 예상대로 동작하지 않을 수 있다.
+				//그러므로 this.state를 사용할 일이 생긴다면 prevState로 함수를 추가하여 내부에서 리턴하도록 만든다
+// 				this.setState((prevState) => {
+// 					return {
+						
+// 					};
+// 				});
+				
+			};
+			
+			onChange = (e) => { 
+				this.setState({ value: e.target.value });
+			};
+			
+			hello; //focus
+			
+			//ReactDOM.render와 this.setState를 호출할 때 redner가 호출된다.this.setState가 많으면 render 안에 오래 걸리는 로직을 작성해선 안 된다.
+			//그래서 redner 안에 있는 태그 안의 함수는 따로 빼서 선언한 것. redner가 실행될 때마다 함수도 계속 선언되기 때문
+			render(){
+				console.log('렌더링');
+				return (
+					<React.Fragment>
+						<div>{this.state.first} 곱하기 {this.state.second}는?</div>
+						<form onSubmit={this.onSubmit}>
+							<input type="number" ref={(c) => {this.hello = c;}} value={this.state.value} onChange={this.onChange} />
+							<button>입력</button>
+						</form>
+						<div>{this.state.result}</div>
+					</React.Fragment>
+				);
+			}
+			//리턴 시 괄호로 묶어도 되도 안 묶어도 된다.
+			//싱글 태그일 때 닫는 태그 표시를 해준다. html일 때는 괜찮지만 xml이기 때문에 문법에 엄격하다.
+			//쓸데 없는 빈 div 태그는 사용하지 않기 때문에 태그가 생기지 않는 React.Fragment 태그를 설정해준다.
+			//<></> 태그를 사용해도 되지만 현재 babel은 지원하지 않는다.(babel 툴을 설치해야 지원해줌)
+		}
+	</script>
+	<script type="text/babel">
+		ReactDOM.render(<div><GuGuDan /><GuGuDan /></div>, document.querySelector('#root'));
+	</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JSX</title>	
+</head>
+<body>
+
+	<div id="root"></div>
+	
+	<!-- React를 실행. -->
+	<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+	
+	<!-- JSX 문법 : javaScript + XML -> javaScript 안에서 html 태그를 사용할 수 있는 실험적인 문법으로 변환해준다. -->
+	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+	<script type="text/babel">
+		class LikeButton extends React.Component {
+			constructor(props){
+				super(props);
+				this.state = {
+					liked: false,
+				};
+			}	
+			
+			render(){ 
+				return <button type="submit" onClick={() => { this.setState({ liked: true })}}>
+						{this.state.liked === true ? 'Liked' : 'Like'}
+						</button>;
+				//컨텐츠 부분에 중괄호로 감싸주면 그 안에 javaScript를 쓸 수 있다
+			}
+		}
+	</script>
+	<script type="text/babel">
+		ReactDOM.render(<div><LikeButton /><LikeButton /><LikeButton /></div>, document.querySelector('#root'));
+	</script>
+	
+</body>
+</html>

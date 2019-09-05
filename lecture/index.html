@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>React 실행</title>
+</head>
+<body>
+
+	<!-- React가 컴포넌트들을 추가할 DOM 컨테이너 -->
+	<div id="root"></div>
+	<!-- 결과 : <div id="root"><button>Like</button></div> -->
+	
+	<!-- React를 실행. -->
+	<!-- 주의: 사이트를 배포할 때는 "development.js"를 "production.min.js"로 대체하세요. -->
+	<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+	<script>
+		const e = React.createElement; //태그 생성하는 함수
+		//클래스 하나가 컴포넌트 하나
+		class LikeButton extends React.Component {
+			constructor(props){
+				super(props);
+				this.state = { //바뀔 수 있는 부분(상태, state)
+					liked: false, //기본값
+				};
+			}	
+			
+			render(){ //화면에 어떻게 표시할 지
+				return e(
+					'button', 
+					{ onClick: () => { this.setState({ liked: true }) }, type: 'submit' }, 
+					this.state.liked === true ? 'Liked' : 'Like',
+				);
+			//return e('button', { onClick: () => {console.log('clicked')}, type: 'submit' }, 'Like'); html 속성은 camel case로 작성
+			//<button onclick="() => {console.log('clicked')}" type="submit">Like</button>를 만들겠다
+			}
+		}
+	</script>
+	<script>
+		//리액트가 만든 LikeButton 컴포넌트를 리액트돔이 화면에 렌더링한다.
+		ReactDOM.render(e(LikeButton), document.querySelector('#root'));
+	</script>
+	
+</body>
+</html>
