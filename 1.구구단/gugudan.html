@@ -55,12 +55,12 @@
 // 				});
 				
 			};
-			
+
 			onChange = (e) => { 
 				this.setState({ value: e.target.value });
 			};
 			
-			hello; //focus
+			onRefInput = (c) => {this.hello = c;};
 			
 			//ReactDOM.render와 this.setState를 호출할 때 redner가 호출된다.this.setState가 많으면 render 안에 오래 걸리는 로직을 작성해선 안 된다.
 			//그래서 redner 안에 있는 태그 안의 함수는 따로 빼서 선언한 것. redner가 실행될 때마다 함수도 계속 선언되기 때문
@@ -70,7 +70,7 @@
 					<React.Fragment>
 						<div>{this.state.first} 곱하기 {this.state.second}는?</div>
 						<form onSubmit={this.onSubmit}>
-							<input type="number" ref={(c) => {this.hello = c;}} value={this.state.value} onChange={this.onChange} />
+							<input type="number" value={this.state.value} ref={this.onRefInput} onChange={this.onChange} />
 							<button>입력</button>
 						</form>
 						<div>{this.state.result}</div>
