@@ -8,14 +8,14 @@
 
 ### React Hooks
 * React는 class 대신 Hooks를 사용하길 장려하고 있다.
-	* 다만 지금까지의 대부분의 코드가 class로 작성되어 있기 때문에 클래도 알아야 한다.
+	* 다만 지금까지의 대부분의 코드가 class로 작성되어 있기 때문에 class도 알아야 한다.
 * 보통 setState나 ref를 사용하지 않으면 class function으로 빼서 사용하는 데, 함수 안에서도 setState나 ref를 사용할 수 있게 만든 게 Hooks이다.
 
 ### React에서 사용하지 못하는 것
 * html의 class 속성 대신 className을 사용해야 한다. (JavaScript의 class와 겹치기 때문)
 * html의 for 속성 대신 htmlFor를 사용해야 한다. (반복문의 for와 겹치므로)
 
-### 스크립트 컴포넌트가 많을 때 - 웹 팩
+### 스크립트 컴포넌트가 많을 때 - Webpack
 * 스크립트 중복과 유지보수의 어려움의 문제
 * 이를 위해 웹 팩이 개발됨
 	* 여러 개의 스크립트 파일을 하나로 합쳐 하나의 JavaScript 파일로 만들어준다.
@@ -55,7 +55,7 @@ npm -v
 ```
 * 하지만 이 방식은 학습이나 간단한 데모 사이트를 만드는 데 괜찮지만 운영에서는 맞지 않다.
 * 운영에서는 `<script>` 태그를 자동으로 변환시켜줄 JSX 전처리기를 만들기 위해 앞서 Node.js와 npm을 설치한 것이다.
-* JSX 전처리기를 포함한 Webpack을 설치하기 위해 터미널을 켜고 프로젝트 디렉토리로 이동하여 아래의 명령어를 입력한다.
+* 먼저 Webpack을 설치하기 위해 터미널을 켜고 프로젝트 디렉토리로 이동하여 아래의 명령어를 입력한다.
 
 ```
 npm init -y
@@ -78,10 +78,22 @@ npm i -D webpack webpack-cli
 	* `-D` : 실제 서비스 할 때는 webpack이 필요없지만 개발할 때만 필요함을 나타낸다.
 * 설치 후 package.json을 확인해보면 dependencies는 실제 서비스, devDependencies는 개발할 때만 사용함을 나타낸다.
 * `client.jsx` 파일을 생성하여 아래와 같이 npm에서 react와 react-dom을 불러오도록 작성한다.
-	* jsx 확장자 : React 전용 파일이고 jsx 문법이 있다는 것을 다른 js 파일과 구별하여 볼 수 있다.
+	* jsx 확장자 : React 전용 파일이고 JSX 문법이 있다는 것을 다른 js 파일과 구별하여 볼 수 있다.
 
 ```js
 const React = require('react');
 const ReactDom = require('react-dom');
 ```
 * 이러한 세팅을 자동화해주는 게 create react app
+
+### webpack 빌드
+* 터미널에 ` webpack` 혹은 `npx webpack` 명령어를 사용한다.
+
+```
+npm i -D @babel/core @babel/preset-env @babel/preset-react babel-loader
+```
+* JSX 전처리기를 위해 webpack에 babel을 추가한다.
+* `@babel/core` : bable의 기본적인 것
+* `@babel/preset-env` : 브라우저에 환경에 맞게 문법을 지원
+* `@babel/preset-react` : JSX 지원
+* `babel-loader` : babel과 webpack을 연결
