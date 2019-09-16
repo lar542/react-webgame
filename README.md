@@ -87,7 +87,7 @@ const ReactDom = require('react-dom');
 * 이러한 세팅을 자동화해주는 게 create react app
 
 ### webpack 빌드
-* 터미널에 ` webpack` 혹은 `npx webpack` 명령어를 사용한다.
+* 터미널에 ` webpack` 혹은 `npx webpack` 혹은 `npm run dev` 명령어를 사용한다.
 
 ```
 npm i -D @babel/core @babel/preset-env @babel/preset-react babel-loader
@@ -97,3 +97,26 @@ npm i -D @babel/core @babel/preset-env @babel/preset-react babel-loader
 * `@babel/preset-env` : 브라우저에 환경에 맞게 문법을 지원
 * `@babel/preset-react` : JSX 지원
 * `babel-loader` : babel과 webpack을 연결
+
+### react-hot-loader와 webpack-dev-server 추가
+* react 관련 파일을 수정할 때마다 react를 빌드해야하는 불편함이 있다.
+* 파일이 변경되면 감지해서 자동으로 빌드되도록 하자.
+
+```
+npm i -D react-hot-loader
+npm i -D webpack-dev-server
+```
+  
+* webpack-dev-server가 webpack.config.json을 읽어서 빌드를 해주고 서버로 유지해준다.
+* package.json에 명령어를 수정한다.
+
+```
+"dev": "webpack-dev-server --hot"
+```
+
+* client.jsx에서 react-hot-loader를 로드하고 hot으로 감싸준다.
+* webpack.config.json에서 module의 plugins에 `react-hot-loader/babel`를 추가해준다.
+* webpack-dev-server를 사용하게 되면 dist 폴더 안의 파일을 사용하지 않기 때문에 output에 publicPath 속성을 추가하여 가상경로를 설정해준다.
+
+
+require : 모드의 모듈 시스템

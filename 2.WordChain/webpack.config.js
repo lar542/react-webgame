@@ -20,20 +20,25 @@ module.exports = {
 				presets: [
 					['@babel/preset-env', { //presets의 세부 설정 시
 						targets: {
-							browsers: ['> 5% in KR', 'last 2 chrome versions'],
+							browsers: ['> 5% in KR'],
 							//한국에서 브라우저 점유율이 5% 이상인 브라우저 호환,
-							//크롬의 마지막 두 버전만 호환
+							//크롬의 마지막 두 버전만 호환 : 'last 2 chrome versions'
+							//옵션 : https://github.com/browserslist/browserslist
 						},
 						debug: true,
 					}], 
 					'@babel/preset-react'
 				], //plugins들의 모음
-				plugins: ['@babel/plugin-proposal-class-properties'],
+				plugins: [
+					'@babel/plugin-proposal-class-properties',
+					'react-hot-loader/babel',
+				],
 			},
 		}]
 	}, //entry 파일들을 읽고 module을 적용한 후 output으로 뺀다
 	output: {
 		path: path.join(__dirname, 'dist'), //현재 폴더 안의 dist 폴더
-		filename: 'app.js'
+		filename: 'app.js',
+		publicPath: '/dist/', //webpack-dev-server의 가상경로
 	}, //합친 파일들을 조작할 경로.
 };
