@@ -117,6 +117,3 @@ npm i -D webpack-dev-server
 * client.jsx에서 react-hot-loader를 로드하고 hot으로 감싸준다.
 * webpack.config.json에서 module의 plugins에 `react-hot-loader/babel`를 추가해준다.
 * webpack-dev-server를 사용하게 되면 dist 폴더 안의 파일을 사용하지 않기 때문에 output에 publicPath 속성을 추가하여 가상경로를 설정해준다.
-
-
-require : 모드의 모듈 시스템
